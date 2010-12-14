@@ -1,0 +1,22 @@
+See:
+
+	http://www.vips.ecs.soton.ac.uk/index.php?title=Build_on_OS_X
+
+Steps:
+
+1) install gtk-osx
+2) jhbuild bootstrap
+3) jhbuild build meta-gtk-osx-bootstrap
+4) jhbuild build meta-gtk-osx-core
+5) append 
+	moduleset = "file:///Users/john/package/vips/jhbuild/vips-osx.modules"
+   to ~/.jhbuild-custom
+6) jhbuild build nip2
+7) jhbuild run nip2 to test the build
+8) ./package-nip2.sh
+
+will generate ~/Desktop/nip2-x.x.x.app, using the binary in ~/gtk/inst
+
+Next, use Disc Utility to make a .dmg. Start Disk Utility, click File / New /
+Disc Image from Folder, pick nip2-x.x.x.app
+
