@@ -9,8 +9,8 @@ Steps:
 3) jhbuild build meta-gtk-osx-bootstrap
 4) jhbuild build meta-gtk-osx-core
 5) append 
-	moduleset = "file:///Users/john/package/vips/jhbuild/vips-osx.modules"
-   to ~/.jhbuild-custom
+	moduleset = "file:///Users/john/SVN/vips/osx/7.24/vips-osx.modules"
+   to ~/.jhbuildrc-custom
 6) jhbuild build nip2
 7) jhbuild run nip2 to test the build
 8) ./package-nip2.sh

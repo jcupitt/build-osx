@@ -23,6 +23,24 @@
   />
 
   <repository 
+    type="tarball"
+    name="graphviz"
+    href="http://www.graphviz.org/pub/graphviz/stable/SOURCES/"
+  />
+
+  <repository 
+    type="tarball"
+    name="cfitsio"
+    href="http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/"
+  />
+
+  <repository 
+    type="tarball"
+    name="orc"
+    href="http://code.entropywave.com/download/orc/"
+  />
+
+  <repository 
     type="tarball" 
     name="nongnu" 
     href="http://download.savannah.nongnu.org/releases/"
@@ -115,8 +133,8 @@
     >
     <branch
       repo="magick"
-      module="ImageMagick/ImageMagick-6.6.3-10.tar.gz"
-      version="6.6.3-10"
+      module="ImageMagick/ImageMagick-6.6.6-5.tar.gz"
+      version="6.6.6-5"
     />
     <dependencies>
       <dep package="vips-lcms"/>
@@ -129,13 +147,37 @@
     </dependencies>
   </autotools>
 
+  <autotools id="cfitsio" 
+    autogen-sh="configure"
+    autogenargs="--disable-reentrant --disable-hera --without-gsiftp"
+    >
+    <branch
+      repo="cfitsio"
+      module="cfitsio3250.tar.gz"
+      version="3.25"
+      checkoutdir="cfitsio"
+      >
+    </branch>
+  </autotools>
+
+  <autotools id="orc-0.4" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="orc"
+      module="orc-0.4.11.tar.gz"
+      version="0.4.11"
+    />
+  </autotools>
+
   <autotools id="libvips" 
     autogen-sh="configure"
     >
     <branch
       repo="vips"
-      module="7.22/vips-7.22.5.tar.gz"
-      version="7.22.5"
+      module="7.24/vips-7.24.1beta2.tar.gz"
+      version="7.24.1"
+      checkoutdir="vips-7.24.1"
       >
     </branch>
     <dependencies>
@@ -152,6 +194,8 @@
       <dep package="openexr"/>
       <dep package="fftw3"/>
       <dep package="imagemagick"/>
+      <dep package="orc-0.4"/>
+      <dep package="cfitsio"/>
     </dependencies>
   </autotools>
 
@@ -184,6 +228,16 @@
     </dependencies>
   </autotools>
 
+  <autotools id="graphviz"
+    autogenargs="--enable-swig=no --enable-sharp=no --enable-guile=no --enable-java=no--enable-io=no --enable-lua=no --enable-ocaml=no --enable-perl=no --enable-php=no --enable-python=no --enable-r=no --enable-ruby=no --enable-tcl=no --with-rsvg=no --with-ghostscript=no"
+    >
+    <branch
+      repo="graphviz"
+      module="graphviz-2.26.3.tar.gz"
+      version="2.26.3">
+    </branch>
+  </autotools>
+
   <!-- we could use this:
 
       <dep package="gtk-quartz-engine"/>
@@ -196,8 +250,9 @@
     >
     <branch
       repo="vips"
-      module="7.22/nip2-7.22.4.tar.gz"
-      version="7.22.4"
+      module="7.24/nip2-7.24.1beta2.tar.gz"
+      version="7.24.1"
+      checkoutdir="nip2-7.24.1"
     />
     <dependencies>
       <dep package="libvips"/>
@@ -205,6 +260,7 @@
       <dep package="gsl"/>
       <dep package="gtk-engines"/>
       <dep package="goffice-noprint"/>
+      <dep package="graphviz"/>
     </dependencies>
   </autotools>
 
