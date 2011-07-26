@@ -1,3 +1,5 @@
+Build an OS X nip2.app with jhbuild
+
 See:
 
 	http://www.vips.ecs.soton.ac.uk/index.php?title=Build_on_OS_X
@@ -16,4 +18,5 @@ Steps:
 8) ./package-nip2.sh
 
 will generate ~/Desktop/nip2-x.x.x.dmg, using the binary in ~/gtk/inst
+
 
