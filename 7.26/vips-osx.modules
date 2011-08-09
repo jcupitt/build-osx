@@ -8,7 +8,7 @@
   <repository 
     type="tarball"
     name="vips"
-    href="http://www.vips.ecs.soton.ac.uk/development/"
+    href="http://www.vips.ecs.soton.ac.uk/supported/"
   />
 
   <repository 
@@ -176,9 +176,9 @@
     >
     <branch
       repo="vips"
-      module="7.26/vips-7.26.0-beta.tar.gz"
-      version="7.26.0"
-      checkoutdir="vips-7.26.0"
+      module="7.26/vips-7.26.1.tar.gz"
+      version="7.26.1"
+      checkoutdir="vips-7.26.1"
       >
     </branch>
     <dependencies>
@@ -251,9 +251,9 @@
     >
     <branch
       repo="vips"
-      module="7.26/nip2-7.26.0-beta.tar.gz"
-      version="7.26.0"
-      checkoutdir="nip2-7.26.0"
+      module="7.26/nip2-7.26.1.tar.gz"
+      version="7.26.1"
+      checkoutdir="nip2-7.26.1"
     />
     <dependencies>
       <dep package="libvips"/>
