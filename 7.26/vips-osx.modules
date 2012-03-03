@@ -2,6 +2,7 @@
 <!DOCTYPE moduleset SYSTEM "moduleset.dtd">
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <moduleset>
+  <include href="file:///Users/john/Source/jhbuild/modulesets/bootstrap.modules"/>
   <include href="file:///Users/john/Source/jhbuild/modulesets/gtk-osx.modules"/>
 
 
@@ -70,8 +71,8 @@
     >
     <branch
       repo="fftw"
-      module="fftw-3.2.2.tar.gz"
-      version="3.2.2"
+      module="fftw-3.3.tar.gz"
+      version="3.3"
     />
   </autotools>
 
@@ -113,8 +114,8 @@
     >
     <branch
       repo="sourceforge"
-      module="libexif/libexif-0.6.19.tar.gz"
-      version="0.6.19"
+      module="libexif/libexif-0.6.20.tar.gz"
+      version="0.6.20"
     />
   </autotools>
 
@@ -134,8 +135,8 @@
     >
     <branch
       repo="magick"
-      module="ImageMagick/ImageMagick-6.6.6-5.tar.gz"
-      version="6.6.6-5"
+      module="ImageMagick/ImageMagick-6.7.1-5.tar.gz"
+      version="6.7.1-5"
     />
     <dependencies>
       <dep package="vips-lcms"/>
@@ -154,8 +155,8 @@
     >
     <branch
       repo="cfitsio"
-      module="cfitsio3250.tar.gz"
-      version="3.25"
+      module="cfitsio3280.tar.gz"
+      version="3.28"
       checkoutdir="cfitsio"
       >
     </branch>
@@ -166,8 +167,8 @@
     >
     <branch
       repo="orc"
-      module="orc-0.4.11.tar.gz"
-      version="0.4.11"
+      module="orc-0.4.14.tar.gz"
+      version="0.4.14"
     />
   </autotools>
 
@@ -176,9 +177,8 @@
     >
     <branch
       repo="vips"
-      module="7.26/vips-7.26.1.tar.gz"
-      version="7.26.1"
-      checkoutdir="vips-7.26.1"
+      module="7.26/vips-7.26.2.tar.gz"
+      version="7.26.2"
       >
     </branch>
     <dependencies>
@@ -205,8 +205,8 @@
     >
     <branch
       repo="gnu"
-      module="gsl/gsl-1.14.tar.gz"
-      version="1.14"
+      module="gsl/gsl-1.15.tar.gz"
+      version="1.15"
     />
   </autotools>
 
@@ -217,8 +217,8 @@
     >
     <branch
       repo="gnome"
-      module="goffice/0.8/goffice-0.8.7.tar.gz"
-      version="0.8.7"
+      module="goffice/0.8/goffice-0.8.13.tar.gz"
+      version="0.8.13"
     />
     <dependencies>
       <dep package="glib"/>
@@ -234,8 +234,8 @@
     >
     <branch
       repo="graphviz"
-      module="graphviz-2.26.3.tar.gz"
-      version="2.26.3">
+      module="graphviz-2.28.0.tar.gz"
+      version="2.28.0">
     </branch>
   </autotools>
 
@@ -244,22 +244,27 @@
       <dep package="gtk-quartz-engine"/>
 
     but it has some repaint problems last time I tried it, and scale widgets
-    didn't work at all -->
+    didn't work at all 
+
+    try it again, if it fails, use this instead
+
+      <dep package="gtk-engines"/>
+
+    -->
 
   <autotools id="nip2" 
     autogen-sh="configure"
     >
     <branch
       repo="vips"
-      module="7.26/nip2-7.26.1.tar.gz"
-      version="7.26.1"
-      checkoutdir="nip2-7.26.1"
+      module="7.26/nip2-7.26.2.tar.gz"
+      version="7.26.2"
     />
     <dependencies>
       <dep package="libvips"/>
       <dep package="gtk+"/>
       <dep package="gsl"/>
-      <dep package="gtk-engines"/>
+      <dep package="gtk-quartz-engine"/>
       <dep package="goffice-noprint"/>
       <dep package="graphviz"/>
     </dependencies>
