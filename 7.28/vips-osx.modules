@@ -1,0 +1,334 @@
+<?xml version="1.0"?>
+<!DOCTYPE moduleset SYSTEM "moduleset.dtd">
+<?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
+<moduleset>
+  <include href="file:///Users/john/Source/jhbuild/modulesets/bootstrap.modules"/>
+  <include href="file:///Users/john/Source/jhbuild/modulesets/gtk-osx.modules"/>
+
+  <repository 
+    type="tarball" 
+    name="github" 
+    href="https://github.com/downloads/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="openjpeg" 
+    href="http://openjpeg.googlecode.com/files/"
+  />
+
+  <repository 
+    type="tarball"
+    name="vips"
+    href="http://www.vips.ecs.soton.ac.uk/supported/"
+  />
+
+  <repository 
+    type="tarball"
+    name="vips-beta"
+    href="http://www.vips.ecs.soton.ac.uk/development/"
+  />
+
+  <repository 
+    type="tarball"
+    name="fftw"
+    href="http://www.fftw.org/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="sourceforge" 
+    href="http://downloads.sourceforge.net/sourceforge/"
+  />
+
+  <repository 
+    type="tarball"
+    name="graphviz"
+    href="http://www.graphviz.org/pub/graphviz/stable/SOURCES/"
+  />
+
+  <repository 
+    type="tarball"
+    name="cfitsio"
+    href="http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/"
+  />
+
+  <repository 
+    type="tarball"
+    name="orc"
+    href="http://code.entropywave.com/download/orc/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="nongnu" 
+    href="http://download.savannah.nongnu.org/releases/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="magick" 
+    href="ftp://ftp.imagemagick.org/pub/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="gnu" 
+    href="ftp://ftp.gnu.org/gnu/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="gnome" 
+    href="http://ftp.gnome.org/pub/GNOME/sources/"
+  />
+
+  <autotools id="fftw3" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="fftw"
+      module="fftw-3.3.tar.gz"
+      version="3.3"
+    />
+  </autotools>
+
+  <autotools id="matio" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="sourceforge"
+      module="matio/matio-1.3.4.zip"
+      version="1.3.4"
+    />
+  </autotools>
+
+  <!-- ilmbase does not build on 10.5, perhaps try again if I ever get 
+  	10.6 installed
+
+	it tries to use -Wno-long-double, removing this from configure.ac
+	makes libtool fail and their bootstrap appears to be broken
+
+    -->
+
+  <autotools id="ilmbase" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="nongnu"
+      module="openexr/ilmbase-1.0.1.tar.gz"
+      version="1.0.1"
+    />
+  </autotools>
+
+  <autotools id="openexr" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="nongnu"
+      module="openexr/openexr-1.6.1.tar.gz"
+      version="1.6.1"
+    />
+    <dependencies>
+      <dep package="ilmbase"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="libexif" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="sourceforge"
+      module="libexif/libexif-0.6.20.tar.gz"
+      version="0.6.20"
+    />
+  </autotools>
+
+  <autotools id="vips-lcms" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="sourceforge"
+      module="lcms/lcms-1.19.tar.gz"
+      version="1.19"
+    />
+  </autotools>
+
+  <autotools id="imagemagick" 
+    autogen-sh="configure"
+    autogenargs="--without-x"
+    >
+    <branch
+      repo="magick"
+      module="ImageMagick/legacy/ImageMagick-6.7.4-10.tar.gz"
+      version="6.7.4-10"
+    />
+    <dependencies>
+      <dep package="vips-lcms"/>
+      <dep package="fftw3"/>
+      <dep package="freetype"/>
+      <dep package="libpng"/>
+      <dep package="libjpeg"/>
+      <dep package="libtiff"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="cfitsio" 
+    autogen-sh="configure"
+    autogenargs="--disable-reentrant --disable-hera --without-gsiftp"
+    >
+    <branch
+      repo="cfitsio"
+      module="cfitsio3290.tar.gz"
+      version="3.29"
+      checkoutdir="cfitsio"
+      >
+    </branch>
+  </autotools>
+
+  <autotools id="orc-0.4" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="orc"
+      module="orc-0.4.14.tar.gz"
+      version="0.4.14"
+    />
+  </autotools>
+
+  <autotools id="openjpeg" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="openjpeg"
+      module="openjpeg-1.5.0.tar.gz"
+      version="1.5.0"
+    />
+  </autotools>
+
+  <autotools id="openslide" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="github"
+      module="openslide/openslide/openslide-3.2.6.tar.gz"
+      version="3.2.6"
+    />
+    <dependencies>
+      <dep package="openjpeg"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="libvips" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="vips-beta"
+      module="vips-7.28.0-beta3.tar.gz"
+      version="7.28.0"
+      checkoutdir="vips-7.28.0"
+      >
+    </branch>
+    <dependencies>
+      <dep package="openslide"/>
+      <dep package="glib"/>
+      <dep package="intltool"/>
+      <dep package="freetype"/>
+      <dep package="pango"/>
+      <dep package="libpng"/>
+      <dep package="vips-lcms"/>
+      <dep package="libjpeg"/>
+      <dep package="libtiff"/>
+      <dep package="libexif"/>
+      <dep package="matio"/>
+      <dep package="fftw3"/>
+      <dep package="imagemagick"/>
+      <dep package="orc-0.4"/>
+      <dep package="cfitsio"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="gsl" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="gnu"
+      module="gsl/gsl-1.15.tar.gz"
+      version="1.15"
+    />
+  </autotools>
+
+  <!-- our own goffice module
+
+	our own goffice module, we don't want the print stuff 
+
+       0.9.x is gtk3, we are stuck with gtk2 for now
+
+       we don't want the print stuff, turn off gconf
+
+       0.8.16+ uses .xz compression which confuses jhbuild, stick with .15
+
+       -->
+
+  <autotools id="goffice-noprint"
+    autogen-sh="configure"
+    autogenargs="--without-gconf"
+    >
+    <branch
+      repo="gnome"
+      module="goffice/0.8/goffice-0.8.15.tar.gz"
+      version="0.8.15">
+    </branch>
+    <dependencies>
+      <dep package="glib"/>
+      <dep package="libgsf"/>
+      <dep package="libxml2"/>
+      <dep package="pango"/>
+      <dep package="libglade"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="graphviz"
+    autogenargs="--enable-swig=no --enable-sharp=no --enable-guile=no --enable-java=no--enable-io=no --enable-lua=no --enable-ocaml=no --enable-perl=no --enable-php=no --enable-python=no --enable-r=no --enable-ruby=no --enable-tcl=no --with-rsvg=no --with-ghostscript=no"
+    >
+    <branch
+      repo="graphviz"
+      module="graphviz-2.28.0.tar.gz"
+      version="2.28.0">
+    </branch>
+  </autotools>
+
+  <!-- we could use this:
+
+      <dep package="gtk-quartz-engine"/>
+
+    but it has some repaint problems last time I tried it, and scale widgets
+    didn't work at all 
+
+    try it again, if it fails, use this instead
+
+      <dep package="gtk-engines"/>
+
+    -->
+
+  <autotools id="nip2" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="vips-beta"
+      module="nip2-7.28.0-beta3.tar.gz"
+      version="7.28.0"
+      checkoutdir="nip2-7.28.0"
+    />
+    <dependencies>
+      <dep package="libvips"/>
+      <dep package="gtk+"/>
+      <dep package="gsl"/>
+      <dep package="gtk-engines"/>
+      <dep package="goffice-noprint"/>
+      <dep package="graphviz"/>
+    </dependencies>
+  </autotools>
+
+</moduleset>
+
