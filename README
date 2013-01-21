@@ -7,16 +7,33 @@ See:
 Steps:
 
 1) install gtk-osx
-2) jhbuild bootstrap
-3) jhbuild build meta-gtk-osx-bootstrap
-4) jhbuild build meta-gtk-osx-core
-5) append 
-	moduleset = "file:///Users/john/SVN/vips/osx/7.24/vips-osx.modules"
-   to ~/.jhbuildrc-custom
-6) jhbuild build nip2
-7) jhbuild run nip2 to test the build
-8) ./package-nip2.sh
 
-will generate ~/Desktop/nip2-x.x.x.dmg, using the binary in ~/gtk/inst
+	https://live.gnome.org/GTK+/OSX/Building
+
+2) jhbuild bootstrap
+
+3) jhbuild build meta-gtk-osx-bootstrap
+
+4) jhbuild build meta-gtk-osx-core
+
+5) append 
+
+	moduleset = "file:///Users/john/GIT/build-osx/7.30/vips-osx.modules"
+
+   to ~/.jhbuildrc-custom
+
+6) edit vips-osx.modules to update versions and paths
+
+7) jhbuild build nip2
+
+8) jhbuild run nip2 to test the build
+
+9) install the bundler:
+
+	   https://live.gnome.org/GTK%2B/OSX/Bundling
+
+10) ./package-nip2.sh
+
+   will generate ~/Desktop/nip2-x.x.x.dmg, using the binary in ~/gtk/inst
 
 
