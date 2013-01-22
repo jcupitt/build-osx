@@ -311,6 +311,12 @@
 
   <!-- we need our own pango with no Xft backend
 
+       this needs to be identical to the pango in 
+       
+	~/Source/jhbuild/modulesets/gtk-osx.modules
+
+       or we'll have two, possibly incompatible, pango libs
+
        -->
 
   <autotools id="vips-pango"

@@ -17,14 +17,14 @@ Steps:
 
 	See:
 
-		http://www.gtk.org/download/macos.php
+		https://live.gnome.org/GTK+/OSX/Building
 
 	Download and run the latest gtk-osx-build-setup.sh to update your
 	build system.
 
 2) jhbuild bootstrap --ignore-system
 
-	Older versions of OS X have very old system components which causes
+	Older versions of OS X have very old system components which cause
 	breakage later. --ignore-system means always build our own.
 
 3) jhbuild build meta-gtk-osx-bootstrap
@@ -33,7 +33,7 @@ Steps:
 
 5) append 
 
-	moduleset = "file:///Users/john/GIT/build-osx/7.28/vips-osx.modules"
+	moduleset = "file:///Users/john/GIT/build-osx/7.30/vips-osx.modules"
 
    adjusted appropriately to ~/.jhbuildrc-custom
 
@@ -61,24 +61,15 @@ Steps:
 
 7) jhbuild run nip2 to test the build
 
-8) ./package-nip2.sh
+8) install the bundler:
 
-will generate ~/Desktop/nip2-x.x.x.dmg, using the binary in ~/gtk/inst
+	   https://live.gnome.org/GTK%2B/OSX/Bundling
+
+9) ./package-nip2.sh
+
+	will generate ~/Desktop/nip2-x.x.x.dmg, using the binary in ~/gtk/inst
 
 9) open ~/Desktop/nip2-x.x.x.app
 
 	to test the package
-
-KNOWN ISSUES
-
-- doubleclicking a workspace in an open dialog will crash
-
-	it seems to be trying to send a message to the dialog after it's gone,
-	this might be work-around-able
-
-- text rendering to an image is broken (you just get white squares, strange)
-
-	I've spend some time looking into this and just not managed to fix it
-	:-( 
-	
 
