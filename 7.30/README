@@ -13,6 +13,15 @@ Steps:
 
 	Stale files here will cause a range of annoying problems.
 
+	If you are using homebrew or macports or fink, make sure those systems
+	are turned off. For example, "sudo mv /usr/local /usr/x"
+
+	Remove the optional Apple X11 libs as well, eg. 
+	"sudo mv /opt/X11 /opt/x", we don't want any configure files picking 
+	them up either.
+
+	Check your environment too.
+
 1) install gtk-osx
 
 	See:
@@ -59,17 +68,41 @@ Steps:
 
 	and rerun the jhbuild.
 
-7) jhbuild run nip2 to test the build
+7) jhbuild run nip2 
+
+	To test the build.
 
 8) install the bundler:
 
-	   https://live.gnome.org/GTK%2B/OSX/Bundling
+	https://live.gnome.org/GTK%2B/OSX/Bundling
+
+8a) build resample.plg
+
+	jhbuild shell
+	cd ~/package/vips/transform-7.30
+	make clean
+	make
 
 9) ./package-nip2.sh
 
-	will generate ~/Desktop/nip2-x.x.x.dmg, using the binary in ~/gtk/inst
+	will generate ~/Desktop/nip2-x.x.x.app.dmg, using the binary in 
+	~/gtk/inst
 
-9) open ~/Desktop/nip2-x.x.x.app
+10) open ~/Desktop/nip2-x.x.x.app
 
-	to test the package
+	to test the packaged app.
+
+	Try renaming ~/gtk to something else to make sure you're not
+	accidentally picking up files users may not have. "mv ~/gtk ~/x".
+
+	Test application text (menus etc.), rendering in nip2 windows (drag a
+	region, verify that labels are drawn correctly) and pango ft2 text
+	(load the businesscard.ws example).
+
+	Verify that in-app icons work, eg. the nip2 icon in the background of
+	the "About" dialog. 
+
+	Verify that goffice plots work: Hist / New etc. 
+
+
 

@@ -9,7 +9,7 @@
          throughout this file on the form "${prefix:name}". This is
          useful for installing certain libraries or even the
          application itself separately. Note that JHBUILD_PREFIX is
-         defined by jhbuild, so if you are not using jhbuild you can
+         defined by jhbuild, so it you are not using jhbuild you can
          either define your own or just hardcode the path here.
     -->
     <prefix name="default">${env:JHBUILD_PREFIX}</prefix>
@@ -33,12 +33,15 @@
          not needed. If the source path is left out, the default
          script will be used.
     -->
-    <launcher-script>nip2-launcher.sh</launcher-script>
+    <launcher-script>${project}/nip2-launcher.sh</launcher-script>
 
     <!-- Not implemented: Optional runtime, could be python or mono
          for example.
     -->
-    <!--runtime copy="yes">/usr/bin/python</runtime-->
+    <!-- runtime copy="yes">/usr/bin/python</runtime -->
+    <!-- Indicate the active gtk version to use. This is needed only
+         for gtk+-3.0 projects. -->
+    <gtk>gtk+-2.0</gtk>
   </meta>
 
   <!-- The special macro "${project}" refers to the directory where
@@ -49,27 +52,56 @@
 
   <main-binary>${prefix}/bin/nip2</main-binary>
 
-  <!-- Copy in GTK+ modules. Note the use of the
-       "${pkg:module:variable}" macro, which evaluates to a pkg-config
-       variable in the specified module. Note that any libraries that
-       binaries link to are also copied in automatically.
+  <!-- Copy in GTK+ modules.  Note the ${gtkdir} macro, which expands
+       to the correct library subdirectory for the specified gtk
+       version.
   -->
   <binary>
-    ${prefix}/lib/gtk-2.0/${pkg:gtk+-2.0:gtk_binary_version}/engines/*clear*.so
+     ${prefix}/lib/${gtkdir}/modules/*.so
+  </binary>
+
+  <!-- The pango modules.
+  -->
+  <binary>
+     ${prefix}/lib/pango/1.8.0/modules/*.so
+  </binary>
+
+  <!-- Copy in GTK+ theme engines and print backends. Note the use of the
+       "${pkg:module:variable}" macro, which evaluates to a pkg-config
+       variable in the specified module. Note that any libraries that
+       binaries link to are also copied in automatically.  Note also
+       the included ${gtk} macro, which gets the correct package name
+       to get. -->
+  <binary>
+    ${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/engines/*.so
+  </binary>
+  <binary>
+    ${prefix}/lib/${gtkdir}/${pkg:${gtk}:gtk_binary_version}/printbackends/*.so
+  </binary>
+
+  <!-- all the gdk pixbuf loaders
+  -->
+  <binary>
+    ${prefix}/lib/gdk-pixbuf-2.0
+  </binary>
+
+  <!-- the goffice plugins
+  -->
+  <binary>
+    ${prefix}/lib/goffice
   </binary>
 
   <!-- Translation filenames, one for each program or library that you
        want to copy in to the bundle. The "dest" attribute is
        optional, as usual. Bundler will find all translations of that
-       library/program under the indicated directory and copy them.
-  -->
-  <translations dest="${bundle}/Contents/Resources" name="gtk20">
+       library/program under the indicated directory and copy them.-->
+  <translations name="gtk20">
     ${prefix}/share/locale
   </translations>
-  <translations dest="${bundle}/Contents/Resources" name="nip2">
+  <translations name="nip2">
     ${prefix}/share/locale
   </translations>
-  <translations dest="${bundle}/Contents/Resources" name="vips7">
+  <translations name="vips7">
     ${prefix}/share/locale
   </translations>
 
@@ -89,15 +121,17 @@
     ${prefix}/share/doc/nip2/html
   </data>
   <data>
-    ${prefix}/share/ImageMagick-*
+    ${prefix}/share/goffice
   </data>
   <data>
-    ${prefix}/share/goffice
+    ${prefix}/share/fontconfig
+  </data>
+  <data>
+    ${prefix}/etc/fonts
   </data>
 
   <!-- Copy in the themes data. You may want to trim this to save space
-       in your bundle. 
-  -->
+       in your bundle. -->
   <data>
     ${prefix}/share/themes
   </data>
@@ -105,17 +139,16 @@
   <!-- Copy icons. Note that the .icns file is an Apple format which
        contains up to 4 sizes of icon. You can use
        /Developer/Applications/Utilities/Icon Composer.app to import
-       artwork and create the file. 
-  -->
+       artwork and create the file. -->
   <data dest="${bundle}/Contents/Resources">
     ${project}/128.icns
   </data>
 
   <!-- This is where theme commands go. You can copy them in from your
        theme of choice if they provide and example, or you can just
-       change the source path. 
-  -->
-  <data dest="${bundle}/Contents/Resources/etc/gtk-2.0/gtkrc">
+       change the source path. -->
+
+  <data dest="${bundle}/Contents/Resources/etc/${gtkdir}/gtkrc">
     ${project}/gtkrc
   </data>
 
@@ -126,8 +159,7 @@
        the strings from all copied binaries, and matching them against
        icon names. To be safe, you should use "all". "none" is useful
        if you want just the index.theme file but no icons, mostly
-       needed for the "hicolor" base theme.
-  -->
+       needed for the "hicolor" base theme. -->
   <icon-theme icons="all">
     hicolor
   </icon-theme>

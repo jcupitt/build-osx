@@ -5,23 +5,23 @@
 	<key>CFBundleExecutable</key>
 	<string>nip2</string>
 	<key>CFBundleGetInfoString</key>
-	<string>vips-7.30.7-Mon Jan 21 22:12:31 GMT 2013, © 2013 Imperial College, London</string>
+	<string>nip2-7.30.2 linked to vips-7.30.7-Sun Jan 27 18:28:19 GMT 2013, © 2013 Imperial College, London</string>
 	<key>CFBundleIconFile</key>
 	<string>128</string>
 	<key>CFBundleIdentifier</key>
 	<string>uk.ac.soton.ecs.vips</string>
 	<key>CFBundleLongVersionString</key>
-	<string>vips-7.30.7-Mon Jan 21 22:12:31 GMT 2013, © 2013 Imperial College, London</string>
+	<string>nip2-7.30.2 linked to vips-7.30.7-Sun Jan 27 18:28:19 GMT 2013, © 2013 Imperial College, London</string>
 	<key>CFBundleName</key>
 	<string>nip2</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>7.30.7</string>
+	<string>7.30.2</string>
 	<key>CFBundleSignature</key>
 	<string>NIP2</string>
 	<key>CFBundleVersion</key>
-	<string>7.30.7</string>
+	<string>7.30.2</string>
 </dict>
 </plist>
 

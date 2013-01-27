@@ -1,15 +1,24 @@
 #!/bin/bash
 
-long_version=`jhbuild run vips --version`
+long_version=`jhbuild run nip2 --version`
 
-major=`jhbuild run vips im_version 0`
-minor=`jhbuild run vips im_version 1`
-micro=`jhbuild run vips im_version 2`
+version="xip2-7.30.2"
 
-version="$major.$minor.$micro"
+if [[ ! $long_version =~ ^nip2-([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
+	echo bad version number from nip2 --version
+fi
+
+version=${BASH_REMATCH[1]}.${BASH_REMATCH[2]}.${BASH_REMATCH[3]}
 
 year=`date +%Y`
 copyright="© $year Imperial College, London"
+
+# nip2.bundle writes here
+dst=~/Desktop/nip2.app
+dst_prefix=$dst/Contents/Resources
+
+# jhbuild installs to here
+src=~/gtk/inst
 
 function escape () {
         # escape slashes
@@ -52,12 +61,27 @@ sub @VERSION@ "$version"
 sub @COPYRIGHT@ "$copyright"
 patch Info.plist
 
-rm -rf ~/Desktop/nip2.app ~/Desktop/nip2-$version.app
+rm -rf $dst 
+rm -rf ~/Desktop/nip2-$version.app
 
 jhbuild run gtk-mac-bundler nip2.bundle
 
-cp ~/package/vips/transform-7.22/resample.plg ~/Desktop/nip2.app/Contents/Resources/lib
-mv ~/Desktop/nip2.app ~/Desktop/nip2-$version.app
+cp $src/etc/pango/pango.modules $dst_prefix/etc/pango
+new
+sub "$src/lib/pango/1.8.0/modules/" ""
+patch $dst_prefix/etc/pango/pango.modules
+
+rm $dst_prefix/etc/fonts/conf.d/*.conf
+( cd $dst_prefix/etc/fonts/conf.d ; \
+	ln -s ../../../share/fontconfig/conf.avail/*.conf . )
+
+# we can't copy the IM share with nip2.bundle because it drops the directory
+# name, annoyingly
+cp -r $src/share/ImageMagick-* $dst_prefix/share
+
+cp ~/package/vips/transform-7.30/resample.plg $dst_prefix/lib
+
+mv $dst ~/Desktop/nip2-$version.app
 
 echo built ~/Desktop/nip2-$version.app
 
