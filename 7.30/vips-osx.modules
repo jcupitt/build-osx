@@ -273,9 +273,15 @@
     />
   </autotools>
 
+  <!-- 6.7.9-10 fails to init omp properly, we need to turn off OpenMP
+
+       6.8+ have a new API which we don't support yet
+
+       -->
+
   <autotools id="imagemagick" 
     autogen-sh="configure"
-    autogenargs="--without-x"
+    autogenargs="--without-x --disable-openmp"
     >
     <branch
       repo="magick"
@@ -353,8 +359,8 @@
     >
     <branch
       repo="vips"
-      module="7.30/vips-7.30.7.tar.gz"
-      version="7.30.7"
+      module="7.30/vips-7.30.8.tar.gz"
+      version="7.30.8"
       >
     </branch>
     <dependencies>
