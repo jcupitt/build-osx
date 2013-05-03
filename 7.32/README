@@ -7,9 +7,12 @@ Steps:
 0) reset download, build and install area
 
 	If you had a previous gtk-osx build system you are updating, flush the
-	whole of the old download and build area:
+	whole of the old build area, but keep downloaded tarballs, if possible
 
-		rm -rf ~/gtk
+		mv ~/gtk/source/pkgs .
+		rm -rf ~/gtk/inst
+		rm -rf ~/gtk/source/*
+		mv pkgs ~/gtk/source
 
 	Stale files here will cause a range of annoying problems.
 
@@ -39,6 +42,13 @@ Steps:
 3) jhbuild build meta-gtk-osx-bootstrap
 
 4) jhbuild build meta-gtk-osx-core
+
+4a) this is a good time to take a snapshot
+
+   	cp -r ~/gtk ~/gtk-snapshot
+
+  now you won't need to rebuild the universe for a new vips change, or perhaps
+  a new imagemagick version test
 
 5) append 
 

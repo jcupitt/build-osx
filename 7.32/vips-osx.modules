@@ -194,8 +194,8 @@
     >
     <branch
       repo="github"
-      module="openslide/openslide/openslide-3.3.1.tar.gz"
-      version="3.3.1"
+      module="openslide/openslide/openslide-3.3.2.tar.gz"
+      version="3.3.2"
     />
     <dependencies>
       <dep package="openjpeg"/>
@@ -275,7 +275,7 @@
 
   <autotools id="imagemagick" 
     autogen-sh="configure"
-    autogenargs="--without-x"
+    autogenargs="--without-x --disable-openmp"
     >
     <branch
       repo="magick"
