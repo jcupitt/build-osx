@@ -352,9 +352,9 @@
     autogen-sh="configure"
     >
     <branch
-      repo="vips"
-      module="7.32/vips-7.32.3.tar.gz"
-      version="7.32.3"
+      repo="vips-beta"
+      module="vips-7.33.0.tar.gz"
+      version="7.33.0"
       >
     </branch>
     <dependencies>
