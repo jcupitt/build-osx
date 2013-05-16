@@ -1,0 +1,486 @@
+<?xml version="1.0"?>
+<!DOCTYPE moduleset SYSTEM "moduleset.dtd">
+<?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
+<moduleset>
+  <include href="file:///Users/john/Source/jhbuild/modulesets/bootstrap.modules"/>
+  <include href="file:///Users/john/Source/jhbuild/modulesets/gtk-osx.modules"/>
+
+  <repository 
+    type="tarball" 
+    name="jpeg" 
+    href="http://www.ijg.org/files/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="github" 
+    href="https://github.com/downloads/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="openjpeg" 
+    href="http://openjpeg.googlecode.com/files/"
+  />
+
+  <repository 
+    type="tarball"
+    name="pcre"
+    href="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/"
+  />
+
+  <repository 
+    type="tarball"
+    name="vips"
+    href="http://www.vips.ecs.soton.ac.uk/supported/"
+  />
+
+  <repository 
+    type="tarball"
+    name="vips-beta"
+    href="http://www.vips.ecs.soton.ac.uk/development/"
+  />
+
+  <repository 
+    type="tarball"
+    name="fftw"
+    href="http://www.fftw.org/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="sourceforge" 
+    href="http://downloads.sourceforge.net/sourceforge/"
+  />
+
+  <repository 
+    type="tarball"
+    name="graphviz"
+    href="http://www.graphviz.org/pub/graphviz/stable/SOURCES/"
+  />
+
+  <repository 
+    type="tarball"
+    name="cfitsio"
+    href="http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/"
+  />
+
+  <repository 
+    type="tarball"
+    name="orc"
+    href="http://code.entropywave.com/download/orc/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="nongnu" 
+    href="http://download.savannah.nongnu.org/releases/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="magick" 
+    href="ftp://ftp.imagemagick.org/pub/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="gnu" 
+    href="ftp://ftp.gnu.org/gnu/"
+  />
+
+  <repository 
+    type="tarball" 
+    name="gnome" 
+    href="http://ftp.gnome.org/pub/GNOME/sources/"
+  />
+
+  <repository 
+    type="tarball"
+    name="tiff"
+    href="ftp://ftp.remotesensing.org/pub/libtiff/"
+  />
+
+  <autotools id="fftw3" 
+    autogen-sh="configure"
+    autogenargs="--disable-static --enable-shared --disable-threads"
+    >
+    <branch
+      repo="fftw"
+      module="fftw-3.3.2.tar.gz"
+      version="3.3.2"
+    />
+  </autotools>
+
+  <!-- the turbo one is 2x to 4x faster 
+
+       the patch changes the "typedef int boolean" that libjpeg-turbo 
+       provides, it causes problems later on for imagemagick
+
+       configure fails on ML with:
+
+       checking whether the linker accepts assembler output... no
+       configure: error: configuration problem: maybe object file format
+       mismatch.
+
+       -->
+
+  <autotools id="libjpeg-turbo" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="sourceforge"
+      module="libjpeg-turbo/1.2.1/libjpeg-turbo-1.2.1.tar.gz"
+      version="1.2.1"
+      >
+      <patch file="http://www.vips.ecs.soton.ac.uk/supported/7.30/win32/libjpeg-turbo-bool.patch" strip="1"/>
+    </branch>
+  </autotools>
+
+  <autotools id="jpeg" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="jpeg"
+      module="jpegsrc.v8d.tar.gz"
+      version="8d"
+      checkoutdir="jpeg-8d"
+      >
+    </branch>
+  </autotools>
+
+  <autotools id="tiff" 
+    autogen-sh="configure"
+    autogenargs="--disable-cxx"
+    >
+    <branch
+      repo="tiff"
+      module="tiff-4.0.3.tar.gz"
+      version="4.0.3"
+      >
+    </branch>
+    <dependencies>
+      <dep package="jpeg"/>
+    </dependencies>
+  </autotools>
+
+  <!-- needed by openslide
+
+       -->
+
+  <autotools id="openjpeg" 
+    autogen-sh="configure"
+    autogenargs="--disable-tiff"
+    >
+    <branch
+      repo="openjpeg"
+      module="openjpeg-1.5.1.tar.gz"
+      version="1.5.1"
+    />
+    <dependencies>
+      <dep package="lcms"/>
+    </dependencies>
+  </autotools>
+
+  <!-- openslide-3.3.0 does not use pkg-config to find openjpeg
+       and so fails during configuration (it doesn't know about cross-
+       compiling). It's also missing a couple of tweaks to speed up aperio 
+       reading. 
+
+       -->
+
+  <autotools id="openslide" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="github"
+      module="openslide/openslide/openslide-3.3.2.tar.gz"
+      version="3.3.2"
+    />
+    <dependencies>
+      <dep package="openjpeg"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="matio" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="sourceforge"
+      module="matio/matio-1.3.4.zip"
+      version="1.3.4"
+    />
+  </autotools>
+
+  <autotools id="libexif" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="sourceforge"
+      module="libexif/libexif-0.6.21.tar.gz"
+      version="0.6.21"
+    />
+  </autotools>
+
+  <!-- the patch stops ilmbase trying to use the deprecated -Wno-long-double
+
+    -->
+
+  <autotools id="ilmbase" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="nongnu"
+      module="openexr/ilmbase-1.0.2.tar.gz"
+      version="1.0.2"
+      >
+      <patch
+        file="http://www.vips.ecs.soton.ac.uk/supported/7.30/osx/ilm-config.patch" strip="1"/>
+    </branch>
+  </autotools>
+
+  <!-- the patch stops openexr trying to use the deprecated -Wno-long-double
+
+    -->
+
+  <autotools id="openexr" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="nongnu"
+      module="openexr/openexr-1.7.0.tar.gz"
+      version="1.7.0"
+      >
+      <patch
+        file="http://www.vips.ecs.soton.ac.uk/supported/7.30/osx/oexr-config.patch" strip="1"/>
+    </branch>
+    <dependencies>
+      <dep package="ilmbase"/>
+    </dependencies>
+  </autotools>
+
+  <!-- we'd like lcms2 for vips (it's faster) but IM needs plain lcms -->
+
+  <!-- experiment - try 2.3 -->
+
+  <autotools id="lcms" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="sourceforge"
+      module="lcms/lcms2-2.3.tar.gz"
+      version="2.3"
+    />
+  </autotools>
+
+  <autotools id="imagemagick" 
+    autogen-sh="configure"
+    autogenargs="--without-x --disable-openmp"
+    >
+    <branch
+      repo="magick"
+      module="ImageMagick/legacy/ImageMagick-6.7.9-10.tar.gz"
+      version="6.7.9-10"
+    />
+    <dependencies>
+      <dep package="lcms"/>
+      <dep package="fftw3"/>
+      <dep package="meta-gtk-osx-freetype"/>
+      <dep package="libpng"/>
+      <dep package="jpeg"/>
+      <dep package="libtiff"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="cfitsio" 
+    autogen-sh="configure"
+    autogenargs="--disable-reentrant --disable-hera --without-gsiftp"
+    >
+    <branch
+      repo="cfitsio"
+      module="cfitsio3310.tar.gz"
+      version="3.31"
+      checkoutdir="cfitsio"
+      >
+    </branch>
+  </autotools>
+
+  <autotools id="orc-0.4" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="orc"
+      module="orc-0.4.14.tar.gz"
+      version="0.4.14"
+    />
+  </autotools>
+
+  <!-- we need our own pango with no Xft backend
+
+       this needs to be identical to the pango in 
+       
+	~/Source/jhbuild/modulesets/gtk-osx.modules
+
+       or we'll have two, possibly incompatible, pango libs
+
+       -->
+
+  <autotools id="pango-vips"
+    autogen-sh="configure"
+    autogenargs="--without-xft"
+    >
+    <branch 
+      repo="gnome"
+      version="1.32.4"
+      module="pango/1.32/pango-1.32.4.tar.xz"
+      >
+      <patch
+        file="http://git.gnome.org/browse/gtk-osx/plain/patches/0001-Fix-relative-module-paths.patch" strip="1"/>
+    </branch>
+    <dependencies>
+      <dep package="cairo"/>
+    </dependencies>
+    <after>
+      <dep package="gobject-introspection"/>
+      <dep package="meta-gtk-osx-freetype"/>
+      <dep package="glib"/>
+      <dep package="meta-gtk-osx-bootstrap"/>
+    </after>
+  </autotools>
+
+  <autotools id="libvips" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="vips"
+      module="7.32/vips-7.32.3.tar.gz"
+      version="7.32.3"
+      >
+    </branch>
+    <dependencies>
+      <dep package="openslide"/>
+      <dep package="glib"/>
+      <dep package="intltool"/>
+      <dep package="meta-gtk-osx-freetype"/>
+      <dep package="harfbuzz"/>
+      <dep package="pango-vips"/>
+      <dep package="libpng"/>
+      <dep package="lcms"/>
+      <dep package="jpeg"/>
+      <dep package="libtiff"/>
+      <dep package="libexif"/>
+      <dep package="matio"/>
+      <dep package="fftw3"/>
+      <dep package="imagemagick"/>
+      <dep package="orc-0.4"/>
+      <dep package="cfitsio"/>
+      <dep package="openexr"/>
+    </dependencies>
+  </autotools>
+
+  <autotools id="gsl" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="gnu"
+      module="gsl/gsl-1.15.tar.gz"
+      version="1.15"
+    />
+  </autotools>
+
+  <autotools id="pcre" 
+    autogen-sh="configure"
+    autogenargs="--enable-utf"
+    >
+    <branch
+      repo="pcre"
+      module="pcre-8.32.tar.gz"
+      version="8.32"
+    />
+  </autotools>
+
+  <!-- our own goffice module
+
+       our own goffice module, we don't want the print stuff 
+
+       0.9.x is gtk3, we are stuck with gtk2 for now
+
+       we don't want gconf - just use keyfiles
+
+       the patch lets us use env vars to relocate goffice at run time
+
+       -->
+
+  <autotools id="goffice"
+    autogen-sh="configure"
+    autogenargs="--with-config-backend=keyfile"
+    >
+    <branch
+      repo="gnome"
+      module="goffice/0.8/goffice-0.8.17.tar.xz"
+      version="0.8.17">
+      <patch
+        file="http://www.vips.ecs.soton.ac.uk/supported/7.30/osx/goffice-env.patch" strip="1"/>
+    </branch>
+    <dependencies>
+      <dep package="glib"/>
+      <dep package="libgsf"/>
+      <dep package="libxml2"/>
+      <dep package="pango-vips"/>
+      <dep package="libglade"/>
+      <dep package="pcre"/>
+    </dependencies>
+  </autotools>
+
+  <!-- on ML we get
+
+         CC     gvc.lo
+	 make[3]: *** No rule to make target `-lltdl', needed by `libgvc.la'.
+	 Stop.
+
+       strange, look into this later
+
+       -->
+
+  <autotools id="graphviz"
+    autogenargs="--enable-swig=no --enable-sharp=no --enable-guile=no --enable-java=no--enable-io=no --enable-lua=no --enable-ocaml=no --enable-perl=no --enable-php=no --enable-python=no --enable-r=no --enable-ruby=no --enable-tcl=no --with-rsvg=no --with-ghostscript=no --with-pangocairo=no"
+    >
+    <branch
+      repo="graphviz"
+      module="graphviz-2.28.0.tar.gz"
+      version="2.28.0">
+    </branch>
+  </autotools>
+
+  <!-- we could use this:
+
+      <dep package="gtk-quartz-engine"/>
+
+    but it has some repaint problems last time I tried it, and scale widgets
+    didn't work at all 
+
+    try it again, if it fails, use this instead
+
+      <dep package="gtk-engines"/>
+
+    -->
+
+  <autotools id="nip2" 
+    autogen-sh="configure"
+    >
+    <branch
+      repo="vips-beta"
+      module="nip2-7.33.0.tar.gz"
+      version="7.33.0"
+    />
+    <dependencies>
+      <dep package="libvips"/>
+      <dep package="gtk+"/>
+      <dep package="gsl"/>
+      <dep package="gtk-engines"/>
+      <dep package="goffice"/>
+    </dependencies>
+  </autotools>
+
+</moduleset>
+

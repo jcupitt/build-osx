@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist SYSTEM "file://localhost/System/Library/DTDs/PropertyList.dtd">
+<plist version="0.9">
+<dict>
+	<key>CFBundleExecutable</key>
+	<string>nip2</string>
+	<key>CFBundleGetInfoString</key>
+	<string>nip2-7.33.0 linked to vips-7.32.3-Fri May 3 10:18:49 BST 2013, © 2013 Imperial College, London</string>
+	<key>CFBundleIconFile</key>
+	<string>128</string>
+	<key>CFBundleIdentifier</key>
+	<string>uk.ac.soton.ecs.vips</string>
+	<key>CFBundleLongVersionString</key>
+	<string>nip2-7.33.0 linked to vips-7.32.3-Fri May 3 10:18:49 BST 2013, © 2013 Imperial College, London</string>
+	<key>CFBundleName</key>
+	<string>nip2</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>7.33.0</string>
+	<key>CFBundleSignature</key>
+	<string>NIP2</string>
+	<key>CFBundleVersion</key>
+	<string>7.33.0</string>
+</dict>
+</plist>
+
+
