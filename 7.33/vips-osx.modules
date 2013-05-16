@@ -350,6 +350,7 @@
 
   <autotools id="libvips" 
     autogen-sh="configure"
+    autogenargs="--enable-debug=no"
     >
     <branch
       repo="vips-beta"
@@ -467,6 +468,7 @@
 
   <autotools id="nip2" 
     autogen-sh="configure"
+    autogenargs="--enable-debug=no"
     >
     <branch
       repo="vips-beta"
