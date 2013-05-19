@@ -92,6 +92,8 @@ Steps:
 	cd ~/package/vips/transform-7.30
 	make clean
 	make
+	cp ~/package/vips/transform-7.30/resample.plg ~/gtk/inst/lib
+	^D
 
 9) ./package-nip2.sh
 
