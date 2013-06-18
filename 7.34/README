@@ -52,7 +52,7 @@ Steps:
 
 5) append 
 
-	moduleset = "file:///Users/john/GIT/build-osx/7.33/vips-osx.modules"
+	moduleset = "file:///Users/john/GIT/build-osx/7.34/vips-osx.modules"
 
    adjusted appropriately to ~/.jhbuildrc-custom
 

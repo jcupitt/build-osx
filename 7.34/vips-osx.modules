@@ -354,8 +354,8 @@
     >
     <branch
       repo="vips-beta"
-      module="vips-7.33.0.tar.gz"
-      version="7.33.0"
+      module="vips-7.34.0.tar.gz"
+      version="7.34.0"
       >
     </branch>
     <dependencies>
@@ -472,8 +472,8 @@
     >
     <branch
       repo="vips-beta"
-      module="nip2-7.33.0.tar.gz"
-      version="7.33.0"
+      module="nip2-7.34.0.tar.gz"
+      version="7.34.0"
     />
     <dependencies>
       <dep package="libvips"/>
