@@ -353,8 +353,8 @@
     autogenargs="--enable-debug=no"
     >
     <branch
-      repo="vips-beta"
-      module="vips-7.34.0.tar.gz"
+      repo="vips"
+      module="7.34/vips-7.34.0.tar.gz"
       version="7.34.0"
       >
     </branch>
@@ -471,8 +471,8 @@
     autogenargs="--enable-debug=no"
     >
     <branch
-      repo="vips-beta"
-      module="nip2-7.34.0.tar.gz"
+      repo="vips"
+      module="7.34/nip2-7.34.0.tar.gz"
       version="7.34.0"
     />
     <dependencies>
