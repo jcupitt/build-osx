@@ -64,10 +64,10 @@ rm -rf ~/Desktop/nip2-$version.app
 
 jhbuild run gtk-mac-bundler nip2.bundle
 
-cp $src/etc/pango/pango.modules $dst_prefix/etc/pango
+cp $src/lib/pango/1.8.0/modules.cache $dst_prefix/lib/pango/1.8.0
 new
 sub "$src/lib/pango/1.8.0/modules/" ""
-patch $dst_prefix/etc/pango/pango.modules
+patch $dst_prefix/lib/pango/1.8.0/modules.cache
 
 rm $dst_prefix/etc/fonts/conf.d/*.conf
 ( cd $dst_prefix/etc/fonts/conf.d ; \

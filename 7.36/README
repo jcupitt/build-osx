@@ -44,14 +44,28 @@ Steps:
 	Download and run the latest gtk-osx-build-setup.sh to update your
 	build system.
 
-2) jhbuild bootstrap --ignore-system
+1a) jhbuild python
 
-	Older versions of OS X have very old system components which cause
-	breakage later. --ignore-system means always build our own.
+	some of the later modules, for example gobject-introspection, assume 
+	you are using the jhbuild python, you need to have this
+
+	it installs to ~/gtk/inst and that area is added to the jhbuild shell
+	for you, so no need to touch your .profile
+
+2) jhbuild bootstrap 
 
 3) jhbuild build meta-gtk-osx-bootstrap
 
 4) jhbuild build meta-gtk-osx-core
+
+	you might have a patch fail in gtk+, if you do, check line 159 of
+	gtk-osx.modules:
+	
+	<patch file="/Users/john/Development/GTK-OSX/gtk-osx-build/patches/gtk+-2-m4-creation.patch" strip="1"/>
+
+	I guess this should be:
+
+	<patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/gtk+-2-m4-creation.patch" strip="1"/>
 
 4a) this is a good time to take a snapshot
 
@@ -62,7 +76,7 @@ Steps:
 
 5) append 
 
-	moduleset = "file:///Users/john/GIT/build-osx/7.34/vips-osx.modules"
+	moduleset = "file:///Users/john/GIT/build-osx/7.36/vips-osx.modules"
 
    adjusted appropriately to ~/.jhbuildrc-custom
 
@@ -106,6 +120,12 @@ Steps:
 	^D
 
 9) ./package-nip2.sh
+
+	you may get the error
+
+		Cannot find source to copy: /Users/john/gtk/inst/lib/charset.alias
+
+	I used an old one in ~/john/gtk/inst/lib
 
 	will generate ~/Desktop/nip2-x.x.x.app.dmg, using the binary in 
 	~/gtk/inst
