@@ -44,15 +44,24 @@ Steps:
 	Download and run the latest gtk-osx-build-setup.sh to update your
 	build system.
 
-1a) jhbuild python
+1a) append
+
+	setup_release()
+
+   to your ~/.jhbuildrc-custom to enable optimisation
+
+2) jhbuild bootstrap 
+
+   	this has to be first, since it builds .xz support for extracting 
+	archives
+
+2a) jhbuild build python
 
 	some of the later modules, for example gobject-introspection, assume 
-	you are using the jhbuild python, you need to have this
+	you are using the jhbuild python, you need this
 
 	it installs to ~/gtk/inst and that area is added to the jhbuild shell
 	for you, so no need to touch your .profile
-
-2) jhbuild bootstrap 
 
 3) jhbuild build meta-gtk-osx-bootstrap
 
@@ -71,8 +80,8 @@ Steps:
 
    	cp -r ~/gtk ~/gtk-snapshot
 
-  now you won't need to rebuild the universe for a new vips change, or perhaps
-  a new imagemagick version test
+   now you won't need to rebuild the universe for a new vips change, or perhaps
+   a new imagemagick version test
 
 5) append 
 
