@@ -190,8 +190,8 @@
     >
     <branch
       repo="github"
-      module="openslide/openslide/releases/download/v3.3.3/openslide-3.3.3.tar.gz"
-      version="3.3.3"
+      module="openslide/openslide/releases/download/v3.4.0/openslide-3.4.0.tar.gz"
+      version="3.4.0"
     />
     <dependencies>
       <dep package="openjpeg"/>
@@ -229,8 +229,8 @@
     >
     <branch
       repo="nongnu"
-      module="openexr/ilmbase-2.0.1.tar.gz"
-      version="2.0.1"
+      module="openexr/ilmbase-2.1.0.tar.gz"
+      version="2.1.0"
       >
     </branch>
   </autotools>
@@ -246,8 +246,8 @@
     >
     <branch
       repo="nongnu"
-      module="openexr/openexr-2.0.1.tar.gz"
-      version="2.0.1"
+      module="openexr/openexr-2.1.0.tar.gz"
+      version="2.1.0"
       >
     </branch>
     <dependencies>
@@ -260,8 +260,8 @@
     >
     <branch
       repo="sourceforge"
-      module="lcms/lcms2-2.5.tar.gz"
-      version="2.5"
+      module="lcms/lcms2-2.6.tar.gz"
+      version="2.6"
     />
   </autotools>
 
@@ -290,8 +290,8 @@
     >
     <branch
       repo="cfitsio"
-      module="cfitsio3310.tar.gz"
-      version="3.31"
+      module="cfitsio3370.tar.gz"
+      version="3.37"
       checkoutdir="cfitsio"
       >
     </branch>
@@ -302,8 +302,8 @@
     >
     <branch
       repo="orc"
-      module="orc-0.4.14.tar.gz"
-      version="0.4.14"
+      module="orc-0.4.18.tar.gz"
+      version="0.4.18"
     />
   </autotools>
 
@@ -338,14 +338,26 @@
     </after>
   </autotools>
 
+  <autotools id="libgsf"
+    autogen-sh="configure"
+    makeargs="CFLAGS=-O2"
+    >
+    <branch
+      repo="gnome"
+      module="libgsf/1.14/libgsf-1.14.30.tar.xz"
+      version="1.14.30">
+    </branch>
+  </autotools>
+
   <autotools id="libvips" 
     autogen-sh="configure"
     autogenargs="--enable-debug=no"
+    makeargs="CFLAGS=-O3 CXXFLAGS=-O3"
     >
     <branch
       repo="vips"
-      module="7.36/vips-7.36.5.tar.gz"
-      version="7.36.5"
+      module="7.40/vips-7.40.3.tar.gz"
+      version="7.40.3"
       >
     </branch>
     <dependencies>
@@ -366,6 +378,7 @@
       <dep package="orc-0.4"/>
       <dep package="cfitsio"/>
       <dep package="openexr"/>
+      <dep package="libgsf"/>
     </dependencies>
   </autotools>
 
@@ -462,8 +475,8 @@
     >
     <branch
       repo="vips"
-      module="7.36/nip2-7.36.5.tar.gz"
-      version="7.36.5"
+      module="7.40/nip2-7.40.2.tar.gz"
+      version="7.40.2"
     />
     <dependencies>
       <dep package="libvips"/>

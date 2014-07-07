@@ -341,11 +341,12 @@
   <autotools id="libvips" 
     autogen-sh="configure"
     autogenargs="--enable-debug=no"
+    makeargs="CFLAGS=-O3 CXXFLAGS=-O3"
     >
     <branch
       repo="vips"
-      module="7.36/vips-7.36.5.tar.gz"
-      version="7.36.5"
+      module="7.38/vips-7.38.0.tar.gz"
+      version="7.38.0"
       >
     </branch>
     <dependencies>
@@ -462,8 +463,8 @@
     >
     <branch
       repo="vips"
-      module="7.36/nip2-7.36.5.tar.gz"
-      version="7.36.5"
+      module="7.38/nip2-7.38.0.tar.gz"
+      version="7.38.0"
     />
     <dependencies>
       <dep package="libvips"/>
