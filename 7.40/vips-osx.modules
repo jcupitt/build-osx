@@ -2,8 +2,8 @@
 <!DOCTYPE moduleset SYSTEM "moduleset.dtd">
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <moduleset>
-  <include href="file:///Users/john/Source/jhbuild/modulesets/bootstrap.modules"/>
-  <include href="file:///Users/john/Source/jhbuild/modulesets/gtk-osx.modules"/>
+  <include href="/Users/john/Source/jhbuild/modulesets/bootstrap.modules"/>
+  <include href="/Users/john/Source/jhbuild/modulesets/gtk-osx.modules"/>
 
   <repository 
     type="tarball" 
@@ -45,6 +45,12 @@
     type="tarball"
     name="fftw"
     href="http://www.fftw.org/"
+  />
+
+  <repository
+    type="tarball"
+    name="sqlite3"
+    href="http://www.sqlite.org/"
   />
 
   <repository 
@@ -178,10 +184,28 @@
     </dependencies>
   </autotools>
 
+  <!-- starting in openslide-3.4.0, sqlite3 is a requirement.
+
+       -->
+
+  <autotools id="sqlite3"
+    autogen-sh="configure"
+    >
+    <branch
+      repo="sqlite3"
+      module="2013/sqlite-autoconf-3080200.tar.gz"
+      version="3.8.2"
+    />
+  </autotools>
+
   <!-- openslide-3.3.0 does not use pkg-config to find openjpeg
        and so fails during configuration (it doesn't know about cross-
        compiling). It's also missing a couple of tweaks to speed up aperio 
        reading. 
+
+       -->
+
+  <!-- the patch fixes .ndpi files >2gb
 
        -->
 
@@ -192,9 +216,12 @@
       repo="github"
       module="openslide/openslide/releases/download/v3.4.0/openslide-3.4.0.tar.gz"
       version="3.4.0"
-    />
+    >
+      <patch file="http://www.vips.ecs.soton.ac.uk/supported/7.38/win32/openslide-3.4.0.patch" strip="1"/>
+    </branch>
     <dependencies>
       <dep package="openjpeg"/>
+      <dep package="sqlite3"/>
     </dependencies>
   </autotools>
 
@@ -356,8 +383,8 @@
     >
     <branch
       repo="vips"
-      module="7.40/vips-7.40.3.tar.gz"
-      version="7.40.3"
+      module="7.40/vips-7.40.4.tar.gz"
+      version="7.40.4"
       >
     </branch>
     <dependencies>
@@ -475,8 +502,8 @@
     >
     <branch
       repo="vips"
-      module="7.40/nip2-7.40.2.tar.gz"
-      version="7.40.2"
+      module="7.40/nip2-7.40.3.tar.gz"
+      version="7.40.3"
     />
     <dependencies>
       <dep package="libvips"/>

@@ -37,14 +37,16 @@ Steps:
 
 1) install gtk-osx
 
+	Remove any old .jhbuild* files first. 
+	Remove ~/.local
+	Remove ~/Source
+
 	See:
 
 		https://live.gnome.org/GTK+/OSX/Building
 
 	Download and run the latest gtk-osx-build-setup.sh to update your
 	build system.
-	
-	Remove any old .jhbuild* files first. 
 
 1a) append
 
@@ -87,7 +89,7 @@ Steps:
 
 5) append 
 
-	moduleset = "file:///Users/john/GIT/build-osx/7.38/vips-osx.modules"
+	moduleset = "file:///Users/john/GIT/build-osx/7.40/vips-osx.modules"
 
    adjusted appropriately to ~/.jhbuildrc-custom
 
