@@ -1,0 +1,163 @@
+todo
+====
+
+- check how the bundler makes pango.modules, could this help our pangpfxft2 issues?
+
+	bin/gdk-pixbuf-query-loaders > lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+	bin/gtk-query-immodules-2.0 > etc/gtk-2.0/gtk.immodules
+	bin/pango-querymodules > etc/pango/pango.modules
+
+
+See:
+
+	http://www.vips.ecs.soton.ac.uk/index.php?title=Build_on_OS_X
+
+Steps:
+
+0) reset download, build and install area
+
+	If you had a previous gtk-osx build system you are updating, flush the
+	whole of the old build area, but keep downloaded tarballs, if possible
+
+		mv ~/gtk/source/pkgs .
+		rm -rf ~/gtk/inst
+		rm -rf ~/gtk/source/*
+		mv pkgs ~/gtk/source
+
+	Stale files here will cause a range of annoying problems.
+
+	If you are using homebrew or macports or fink, make sure those systems
+	are turned off. For example, "sudo mv /usr/local /usr/x"
+
+	Remove the optional Apple X11 libs as well, eg. 
+	"sudo mv /opt/X11 /opt/x", we don't want any configure files picking 
+	them up either.
+
+	Check your environment too.
+
+1) install gtk-osx
+
+	Remove any old .jhbuild* files first. 
+	Remove ~/.local
+	Remove ~/Source
+
+	See:
+
+		https://live.gnome.org/GTK+/OSX/Building
+
+	Download and run the latest gtk-osx-build-setup.sh to update your
+	build system.
+
+1a) append
+
+	setup_release()
+
+   to your ~/.jhbuildrc-custom to enable optimisation
+
+2) jhbuild bootstrap 
+
+   	this has to be first, since it builds .xz support for extracting 
+	archives
+
+2a) jhbuild build python
+
+	some of the later modules, for example gobject-introspection, assume 
+	you are using the jhbuild python, you need this
+
+	it installs to ~/gtk/inst and that area is added to the jhbuild shell
+	for you, so no need to touch your .profile
+
+3) jhbuild build meta-gtk-osx-bootstrap
+
+4) jhbuild build meta-gtk-osx-core
+
+	you might have a patch fail in gtk+, if you do, check line 159 of
+	gtk-osx.modules:
+	
+	<patch file="/Users/john/Development/GTK-OSX/gtk-osx-build/patches/gtk+-2-m4-creation.patch" strip="1"/>
+
+	I guess this should be:
+
+	<patch file="http://git.gnome.org/browse/gtk-osx/plain/patches/gtk+-2-m4-creation.patch" strip="1"/>
+
+4a) this is a good time to take a snapshot
+
+   	cp -r ~/gtk ~/gtk-snapshot
+
+   now you won't need to rebuild the universe for a new vips change, or perhaps
+   a new imagemagick version test
+
+5) append 
+
+	moduleset = "file:///Users/john/GIT/build-osx/7.40/vips-osx.modules"
+
+   adjusted appropriately to ~/.jhbuildrc-custom
+
+6) jhbuild build nip2
+
+	You may have problems downloading openslide on some versions of OS X.
+	If you see this error:
+
+		curl: (60) SSL certificate problem, verify that the CA cert is
+		OK. Details:
+		error:14090086:SSL
+		routines:SSL3_GET_SERVER_CERTIFICATE:certificate verify failed
+
+	you need to update your cert bundle.
+
+	Download a new bundle from here:
+
+		http://curl.haxx.se/docs/caextract.html
+
+	point your curl at it like this:
+
+		export CURL_CA_BUNDLE=/Users/john/Desktop/cacert.pem 
+
+	and rerun the jhbuild.
+
+7) jhbuild run nip2 
+
+	To test the build.
+
+8) install the bundler:
+
+	https://live.gnome.org/GTK%2B/OSX/Bundling
+
+8a) build resample.plg
+
+	jhbuild shell
+	cd ~/package/vips/transform-7.30
+	make clean
+	make
+	cp ~/package/vips/transform-7.30/resample.plg ~/gtk/inst/lib
+	^D
+
+9) ./package-nip2.sh
+
+	you may get the error
+
+		Cannot find source to copy: /Users/john/gtk/inst/lib/charset.alias
+
+	I used an old one in ~/john/gtk/inst/lib
+
+	will generate ~/Desktop/nip2-x.x.x.app.dmg, using the binary in 
+	~/gtk/inst
+
+10) open ~/Desktop/nip2-x.x.x.app
+
+	to test the packaged app.
+
+	Try renaming ~/gtk to something else to make sure you're not
+	accidentally picking up files users may not have. "mv ~/gtk ~/x".
+
+	Test application text (menus etc.), rendering in nip2 windows (drag a
+	region, verify that labels are drawn correctly) and pango ft2 text
+	(load the businesscard.ws example).
+
+	Verify that in-app icons work, eg. the nip2 icon in the background of
+	the "About" dialog. 
+
+	Verify that goffice plots work: Hist / New etc. 
+
+
+
