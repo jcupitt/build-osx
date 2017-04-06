@@ -1,0 +1,27 @@
+diff -Naur goffice-0.8.17.orig/goffice/goffice.c goffice-0.8.17/goffice/goffice.c
+--- goffice-0.8.17.orig/goffice/goffice.c	2013-02-28 10:57:34.000000000 +0000
++++ goffice-0.8.17/goffice/goffice.c	2013-02-28 10:59:38.000000000 +0000
+@@ -167,6 +167,23 @@
+ 	}
+ #endif
+ 
++	/* Allow env vars to override the install location.
++	 */
++{
++	const char *dir;
++
++	if ((dir = g_getenv( "GOFFICE_PREFIX" ))) {
++		libgoffice_data_dir = g_build_filename (dir,
++			"share", "goffice", GOFFICE_VERSION, NULL);
++		libgoffice_icon_dir = g_build_filename (dir,
++			"share", "pixmaps", "goffice", GOFFICE_VERSION, NULL);
++		libgoffice_locale_dir = g_build_filename (dir,
++			"share", "locale", NULL);
++		libgoffice_lib_dir = g_build_filename (dir,
++			"lib", "goffice", GOFFICE_VERSION, NULL);
++	}
++}
++
+ 	bindtextdomain (GETTEXT_PACKAGE, libgoffice_locale_dir);
+ 	bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
+ 	g_type_init ();
