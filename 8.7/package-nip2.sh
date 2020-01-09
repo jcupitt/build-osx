@@ -66,7 +66,7 @@ echo bundling nip2.app ...
 
 jhbuild run gtk-mac-bundler nip2.bundle
 
-# pango later than 1.38 does not need any of this stuff
+# current pango does not need any of this stuff
 # cp $src/lib/pango/1.8.0/modules.cache $dst_prefix/lib/pango/1.8.0
 # new
 # sub "$src/lib/pango/1.8.0/modules/" ""
@@ -89,3 +89,4 @@ echo built ~/Desktop/nip2-$version.app
 echo building .dmg
 rm -f ~/Desktop/nip2-$version.app.dmg
 hdiutil create -srcfolder ~/Desktop/nip2-$version.app -o ~/Desktop/nip2-$version.app.dmg
+echo built ~/Desktop/nip2-$version.app.dmg

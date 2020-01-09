@@ -32,11 +32,9 @@ are turned off. For example
 		sudo mkdir x
 		sudo mv * x
 
-Remove the optional Apple X11 libs as well:
-
-    sudo mv /opt/X11 /opt/x
-    
-we don't want any configure files picking them up either.
+Remove the optional Apple X11 libs as well, eg. 
+"sudo mv /opt/X11 /opt/x", we don't want any configure files picking 
+them up either.
 
 Check your environment too.
 
@@ -73,22 +71,6 @@ for you, so no need to touch your .profile.
 Make sure ~/gtk/inst/bin is NOT in your path, you don't want to use
 this new python to run jhbuild itself.
 
-## add pip
-
-Later, gtk-doc needs six to install, so you need to add this module to the
-jhbuild python.
-
-    jhbuild shell
-    python -m ensurepip
-    pip install --user six
-
-or possibly
-
-    jhbuild shell
-    curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
-    python ~/get-pip.py
-    pip install --user six
-
 ## jhbuild build meta-gtk-osx-bootstrap
 
 ## jhbuild build meta-gtk-osx-core
@@ -100,11 +82,11 @@ This is a good time to take a snapshot.
 Now you won't need to rebuild the universe for a new vips change, or perhaps
 a new imagemagick version test.
 
-To enable the vips modules, append:
+## append 
 
-    moduleset = "file:///Users/john/GIT/build-osx/8.6/vips-osx.modules"
+	moduleset = "file:///Users/john/GIT/build-osx/8.6/vips-osx.modules"
 
-adjusted appropriately to `~/.jhbuildrc-custom`.
+   adjusted appropriately to ~/.jhbuildrc-custom
 
 ## jhbuild build nip2
 
@@ -116,23 +98,20 @@ adjusted appropriately to `~/.jhbuildrc-custom`.
 
 	https://wiki.gnome.org/Projects/GTK%2B/OSX/Bundling
 
-  https://github.com/jralls/gtk-mac-bundler
-
-  cd GIT
-  git clone https://github.com/jralls/gtk-mac-bundler.git
-  cd gtk-mac-bundler
-  make install
-
-Installs `gtk-mac-bundler` to `~/.local/bin`.
-
 ## build resample.plg
 
 	jhbuild shell
 	cd ~/package/vips/transform-7.30
 	make clean
 	make
-	cp resample.plg ~/gtk/inst/lib
+	cp ~/package/vips/transform-7.30/resample.plg ~/gtk/inst/lib
 	^D
+
+## latest pango does not need any config files, comment out
+
+	self.create_pango_setup()
+
+  from ~/gtk-mac-bundler-0.7.4/bundler/bundler.py
 
 ## ./package-nip2.sh
 

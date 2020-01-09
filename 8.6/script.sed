@@ -1,4 +1,4 @@
 
-s/@LONG_VERSION@/nip2-8.6.0 linked to vips-8.6.0-Fri Dec 1 08\:59\:03 GMT 2017/g
+s/@LONG_VERSION@/nip2-8.6.0 linked to vips-8.6.5-Wed Jul 25 09\:46\:22 UTC 2018/g
 s/@VERSION@/8.6.0/g
-s/@COPYRIGHT@/© 2017 Imperial College, London/g
+s/@COPYRIGHT@/© 2018 Imperial College, London/g

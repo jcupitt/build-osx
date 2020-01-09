@@ -52,12 +52,6 @@
 
   <repository 
     type="tarball"
-    name="matio"
-    href="https://github.com/tbeu/matio/releases/download/"
-  />
-
-  <repository 
-    type="tarball"
     name="nip2"
     href="https://github.com/jcupitt/nip2/releases/download/"
   />
@@ -125,22 +119,18 @@
   <repository 
     type="tarball"
     name="tiff"
-    href="https://download.osgeo.org/libtiff/"
+    href="ftp://download.osgeo.org/libtiff/"
   />
-
-  <!-- libpng is installed by gtk-osx-bootstrap
 
   <autotools id="libpng" 
     autogen-sh="configure"
     >
     <branch
       repo="sourceforge"
-      module="libpng/libpng-1.6.34.tar.gz"
-      version="1.6.34"
+      module="libpng/libpng-1.6.25.tar.gz"
+      version="1.6.25"
     />
   </autotools>
-
-    -->
 
   <!-- giflib does not automatically open binary when cross-compiling
 
@@ -251,6 +241,9 @@
     </branch>
   </autotools>
 
+  <!-- matio does not work with mingw, sadly, it can't make a DLL and we need
+       one for vips to link to -->
+
   <!-- openexr does not work with mingw, it becomes very confused re.
        threading -->
 
@@ -287,8 +280,8 @@
     >
     <branch
       repo="tiff"
-      module="tiff-4.0.9.tar.gz"
-      version="4.0.9"
+      module="tiff-4.0.7.tar.gz"
+      version="4.0.7"
       >
     </branch>
     <dependencies>
@@ -349,9 +342,9 @@
     autogen-sh="configure"
     >
     <branch
-      repo="matio"
-      module="v1.5.12/matio-1.5.12.tar.gz"
-      version="1.5.12"
+      repo="sourceforge"
+      module="matio/matio-1.5.6.zip"
+      version="1.5.6"
     />
   </autotools>
 
@@ -408,7 +401,7 @@
     <dependencies>
       <dep package="lcms"/>
       <dep package="fftw3"/>
-      <dep package="freetype"/>
+      <dep package="meta-gtk-osx-freetype"/>
       <dep package="libpng"/>
       <dep package="jpeg"/>
       <dep package="libtiff"/>
@@ -458,21 +451,6 @@
     />
   </autotools>
 
-  <autotools id="freetype"
-    autogen-sh="configure"
-    autogenargs="--enable-static"
-    >
-    <branch 
-      repo="nongnu"
-      module="freetype/freetype-2.9.1.tar.gz"
-      version="2.9.1"
-    />
-    <dependencies>
-      <dep package="gettext"/>
-      <dep package="expat"/>
-    </dependencies>
-  </autotools>
-
   <!-- we need our own pango with no Xft backend
 
        this needs to be identical to the pango in 
@@ -496,11 +474,10 @@
     <dependencies>
       <dep package="glib"/>
       <dep package="cairo"/>
-      <dep package="freetype"/>
-      <dep package="harfbuzz"/>
      </dependencies>
     <after>
       <dep package="gobject-introspection"/>
+      <dep package="meta-gtk-osx-freetype"/>
       <dep package="meta-gtk-osx-bootstrap"/>
     </after>
   </autotools>
@@ -532,16 +509,16 @@
 
     <branch
       repo="vips"
-      module="v8.6.5/vips-8.6.5.tar.gz"
-      version="8.6.5"
-      checkoutdir="vips-8.6.5"
+      module="v8.6.0-beta1/vips-8.6.0-beta1.tar.gz"
+      version="8.6.0"
+      checkoutdir="vips-8.6.0"
     />
 
     <dependencies>
       <dep package="openslide"/>
       <dep package="glib"/>
       <dep package="intltool"/>
-      <dep package="freetype"/>
+      <dep package="meta-gtk-osx-freetype"/>
       <dep package="harfbuzz"/>
       <dep package="pango-vips"/>
       <dep package="libpng"/>
@@ -652,7 +629,7 @@
     >
     <branch
       repo="nip2"
-      module="v8.6.0/nip2-8.6.0.tar.gz"
+      module="v8.6.0-beta2/nip2-8.6.0-beta2.tar.gz"
       version="8.6.0"
       checkoutdir="nip2-8.6.0"
     />
